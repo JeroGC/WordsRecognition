@@ -1,7 +1,9 @@
 #安装百度的aip，pip install baidu_aip，调用aip做图像中文字的识别
 from aip import AipOcr
 import configparser
+import os
 
+DIR_PATH = os.getcwd()
 
 class BaiDuAPI:
     #调用百度云的API实现图片文字的识别
@@ -13,9 +15,9 @@ class BaiDuAPI:
         #读取工单信息
         #target.get第一个参数是section，第二个参数是键名，返回对应值
         #每一个应用的下面三个值不一样，实时更改
-        app_id=target.get('工单密码','APP_ID')
-        api_key=target.get('工单密码','API_KEY')
-        secret_key=target.get('工单密码','SECRET_KEY')
+        app_id=configparser.ConfigParser('conf','APP_ID')
+        api_key=configparser.ConfigParser('conf','API_KEY')
+        secret_key=configparser.ConfigParser('conf','SECRET_KEY')
         
         #APPID AK SK
         APP_ID=app_id
@@ -44,9 +46,16 @@ class BaiDuAPI:
             return fp.read()
         
 if __name__=='__main__':
+
+    #baiduapi=BaiDuAPI(
+    #        r'C:\Users\Smile\Documents\screenshot\password.ini')
+    #aiduapi=BaiDuAPI
+    #text=baiduapi.picture2Text(
+    #        r'C:\Users\Smile\Documents\screenshot\imageGrab.png')
+    #print(text)
     baiduapi=BaiDuAPI(
-            r'C:\Users\Administrator\.spyder-py3\screenshot\password.ini')
+            DIR_PATH + r'\password.ini')
     #aiduapi=BaiDuAPI
     text=baiduapi.picture2Text(
-            r'C:\Users\Administrator\.spyder-py3\screenshot\imageGrab.png')
+            DIR_PATH + r'\imageGrab.png')
     print(text)
